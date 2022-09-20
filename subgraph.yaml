@@ -1,0 +1,32 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: CygnusAltairX
+    network: avalanche
+    source:
+      address: "0x165Bd223dE484b3429e06EC37a8BBD8bC8f81362"
+      abi: CygnusAltairX
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - DeleteChainlinkNebula
+        - InitializeChainlinkNebula
+        - NewOracleAdmin
+        - NewOraclePendingAdmin
+      abis:
+        - name: CygnusAltairX
+          file: ./abis/CygnusAltairX.json
+      eventHandlers:
+        - event: DeleteChainlinkNebula(uint24,address,address,address,address)
+          handler: handleDeleteChainlinkNebula
+        - event: InitializeChainlinkNebula(bool,uint24,address,address,address)
+          handler: handleInitializeChainlinkNebula
+        - event: NewOracleAdmin(address,address)
+          handler: handleNewOracleAdmin
+        - event: NewOraclePendingAdmin(address,address)
+          handler: handleNewOraclePendingAdmin
+      file: ./src/cygnus-altair-x.ts
